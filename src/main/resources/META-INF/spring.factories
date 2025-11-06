@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.mssdk.v2.config.RpcWebClientAutoConfig,\
+  com.mssdk.v2.config.RpcRestTemplateAutoConfig,\
+  com.mssdk.v2.config.BalanceManagerAutoConfig,\
+  com.mssdk.v2.http.RpcHttpProxy
