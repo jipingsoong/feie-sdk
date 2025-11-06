@@ -1,6 +1,7 @@
-package com.eeeyou.feiesdk;
+package com.eeeyou.feiesdk.utils;
 
 
+import com.eeeyou.feiesdk.config.FlyGooseConfig;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -12,6 +13,16 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @since : 2025/11/3 下午4:41
  */
 public class SignUtils {
+
+    /**
+     * 根据配置获取签名
+     *
+     * @return 签名
+     */
+    public static String signature(String sTime) {
+        FlyGooseConfig flyGooseConfig = ConfigUtils.getFlyGooseConfig();
+        return signature(flyGooseConfig.getUser(), flyGooseConfig.getuKey(), sTime);
+    }
 
     /**
      * 签名

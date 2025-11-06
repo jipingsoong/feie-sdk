@@ -1,6 +1,14 @@
 package com.eeeyou.feiesdk.constant;
 
-public class CommonConstant {
+/**
+ * ParamConstant
+ * <p>
+ * 参数常量
+ *
+ * @author : SongJiping
+ * @since : 2025/11/4 下午12:01
+ */
+public class ParamConstant {
 
     public static final String USER = "user";
     public static final String S_TIME = "stime";
