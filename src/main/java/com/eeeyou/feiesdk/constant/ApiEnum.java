@@ -1,5 +1,7 @@
 package com.eeeyou.feiesdk.constant;
 
+import lombok.Getter;
+
 /**
  * ApiEnum
  * <p>
@@ -8,10 +10,21 @@ package com.eeeyou.feiesdk.constant;
  * @author : SongJiping
  * @since : 2025/11/4 下午12:01
  */
+@Getter
 public enum ApiEnum {
 
     PRINT_API("Open_printMsg", "https://api.feieyun.cn/Api/Open/", "打印订单"),
-    ;
+    CLEAR_PRINT_QUEUE_API("Open_delPrinterSqs", "https://api.feieyun.cn/Api/Open/", "清空待打印队列"),
+    ORDER_STATE_API("Open_queryOrderState", "https://api.feieyun.cn/Api/Open/",
+            "查询订单是否打印成功"),
+    ORDER_COUNT_API("Open_queryOrderInfoByDate", "https://api.feieyun.cn/Api/Open/",
+            "查询指定设备某天的订单统计数"),
+    PRINTER_STATUS_API("Open_queryPrinterStatus", "https://api.feieyun.cn/Api/Open/",
+            "获取某台设备状态"),
+    PRINTER_INFO("Open_printerInfo", "https://api.feieyun.cn/Api/Open/", "获取某台设备信息"),
+    printerSetScanSwitch("Open_printerSetScanSwitch", "https://api.feieyun.cn/Api/Open/",
+            "设置设备扫码回调");
+
 
     private final String apiName;
     private final String url;
@@ -21,17 +34,5 @@ public enum ApiEnum {
         this.apiName = apiName;
         this.url = url;
         this.apiDesc = apiDesc;
-    }
-
-    public String getApiName() {
-        return apiName;
-    }
-
-    public String getApiDesc() {
-        return apiDesc;
-    }
-
-    public String getUrl() {
-        return url;
     }
 }
