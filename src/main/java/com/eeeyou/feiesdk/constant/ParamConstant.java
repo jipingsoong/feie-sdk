@@ -22,4 +22,5 @@ public class ParamConstant {
     public static final String DATE = "date";
     public static final String PHONE_NUM = "phonenum";
     public static final String NAME = "name";
+    public static final String SWITCH = "switch";
 }

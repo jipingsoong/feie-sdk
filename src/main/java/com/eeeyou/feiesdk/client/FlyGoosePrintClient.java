@@ -5,18 +5,16 @@ import com.eeeyou.feiesdk.constant.ApiEnum;
 import com.eeeyou.feiesdk.constant.BaseConstant;
 import com.eeeyou.feiesdk.entity.Device;
 import com.eeeyou.feiesdk.entity.DeviceInfo;
+import com.eeeyou.feiesdk.entity.OrderInfo;
 import com.eeeyou.feiesdk.response.ApiBaseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-
 import static com.eeeyou.feiesdk.constant.ParamConstant.*;
 
 /**
@@ -27,7 +25,6 @@ import static com.eeeyou.feiesdk.constant.ParamConstant.*;
  * @author : SongJiping
  * @since : 2025/11/4 上午11:59
  */
-@Component
 public class FlyGoosePrintClient {
 
     public FlyGoosePrintClient(RestTemplateHttpClient httpClient) {
@@ -99,7 +96,7 @@ public class FlyGoosePrintClient {
         }
         params.put(SN, sn);
         params.put(NAME, name);
-        if (StringUtils.isNotEmpty(phoneNum)){
+        if (StringUtils.isNotEmpty(phoneNum)) {
             params.put(PHONE_NUM, phoneNum);
         }
         params.put(PHONE_NUM, phoneNum);
@@ -122,9 +119,9 @@ public class FlyGoosePrintClient {
         ObjectMapper mapper = new ObjectMapper();
 
         ApiBaseResponse<DeviceInfo> response = mapper.readValue(resultObj,
-                        mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, DeviceInfo.class));
+                mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, DeviceInfo.class));
 
-        if (response == null || response.getData() == null){
+        if (response == null || response.getData() == null) {
             throw new NullPointerException("设备信息为空");
         }
         return response;
@@ -136,10 +133,14 @@ public class FlyGoosePrintClient {
      * @param sn 打印机编号
      * @return 调用结果
      */
-    public void clearPrintQueue(@NonNull String sn) {
+    public ApiBaseResponse<Boolean> clearPrintQueue(@NonNull String sn)
+            throws JsonProcessingException {
         HashMap<String, String> params = new HashMap<>();
         params.put(SN, sn);
-        String result = httpClient.postForm(ApiEnum.PRINT_API, params, String.class);
+        String resultObj = httpClient.postForm(ApiEnum.PRINT_API, params, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(resultObj,
+                mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, Boolean.class));
     }
 
     /**
@@ -148,20 +149,51 @@ public class FlyGoosePrintClient {
      * @param orderId 订单编号
      * @return 调用结果
      */
-    public void getPrinterStatus(@NonNull String orderId) {
+    public ApiBaseResponse<Boolean> getPrinterStatus(@NonNull String orderId)
+            throws JsonProcessingException {
         HashMap<String, String> params = new HashMap<>();
         params.put(ORDER_ID, orderId);
-        String result = httpClient.postForm(ApiEnum.PRINTER_STATUS_API, params, String.class);
+        String resultObj = httpClient.postForm(ApiEnum.ORDER_STATE_API, params, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(resultObj,
+                mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, Boolean.class));
     }
 
-    // 查询订单数
-    public void getOrderInfoByDate(@NonNull String sn, @NonNull LocalDate localDate) {
+    /**
+     * 查询订单数
+     *
+     * @param sn        打印机编号
+     * @param localDate 日期
+     * @return 调用结果
+     */
+    public ApiBaseResponse<OrderInfo> getOrderInfoByDate(@NonNull String sn, @NonNull LocalDate localDate)
+            throws JsonProcessingException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = localDate.format(formatter);
         HashMap<String, String> params = new HashMap<>();
         params.put(SN, sn);
         params.put(DATE, date);
-        String result = httpClient.postForm(ApiEnum.ORDER_COUNT_API, params, String.class);
+        String resultObj = httpClient.postForm(ApiEnum.ORDER_COUNT_API, params, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(resultObj,
+                mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, OrderInfo.class));
     }
 
+    /**
+     * 设置设备扫码回调
+     *
+     * @param sn           打印机编号
+     * @param switchStatus 设备设置扫码路径，0：关闭，1：开启。
+     * @return 调用结果
+     */
+    public ApiBaseResponse<Boolean> printerSetScanSwitch(@NonNull String sn, @NonNull int switchStatus)
+            throws JsonProcessingException {
+        HashMap<String, String> params = new HashMap<>();
+        params.put(SN, sn);
+        params.put(SWITCH, String.valueOf(switchStatus));
+        String resultObj = httpClient.postForm(ApiEnum.ORDER_COUNT_API, params, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(resultObj,
+                mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, Boolean.class));
+    }
 }
