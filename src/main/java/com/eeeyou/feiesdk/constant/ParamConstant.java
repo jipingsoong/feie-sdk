@@ -16,7 +16,9 @@ public class ParamConstant {
     public static final String API_NAME = "apiname";
     public static final String SN = "sn";
     public static final String CONTENT = "content";
-    public static final String PRINTER_CONTENT  = "printerContent";
+    public static final String PRINTER_CONTENT = "printerContent";
     public static final String TIMES = "times";
+    public static final String PHONE_NUM = "phonenum";
+    public static final String NAME = "name";
 
 }

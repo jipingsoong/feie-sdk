@@ -4,6 +4,8 @@ import com.eeeyou.feiesdk.bulid.PrinterContentBuilder;
 import com.eeeyou.feiesdk.constant.ApiEnum;
 import com.eeeyou.feiesdk.constant.BaseConstant;
 import com.eeeyou.feiesdk.entity.Device;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,5 +71,30 @@ public class FlyGoosePrintClient {
         }
         params.put(SN, String.join(BaseConstant.MINUS, snList));
         return httpClient.postForm(ApiEnum.DELETE_DEVICE_API, params, String.class);
+    }
+
+    /**
+     * 修改设备信息
+     *
+     * @param sn       设备信息
+     * @param name     设备名称
+     * @param phoneNum 流量卡号码
+     * @return 批量修改设备结果
+     */
+    public String modifyDevice(String sn, String name, String phoneNum) {
+        HashMap<String, String> params = new HashMap<>();
+        if (StringUtils.isEmpty(sn)) {
+            throw new IllegalArgumentException("设备编号不能为空");
+        }
+        if (StringUtils.isEmpty(name)) {
+            throw new IllegalArgumentException("设备名称不能为空");
+        }
+        params.put(SN, sn);
+        params.put(NAME, name);
+        if (StringUtils.isNotEmpty(phoneNum)){
+            params.put(PHONE_NUM, phoneNum);
+        }
+        params.put(PHONE_NUM, phoneNum);
+        return httpClient.postForm(ApiEnum.MODIFY_DEVICE_API, params, String.class);
     }
 }
