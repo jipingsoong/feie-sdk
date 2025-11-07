@@ -4,7 +4,11 @@ import com.eeeyou.feiesdk.bulid.PrinterContentBuilder;
 import com.eeeyou.feiesdk.constant.ApiEnum;
 import com.eeeyou.feiesdk.constant.BaseConstant;
 import com.eeeyou.feiesdk.entity.Device;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import com.eeeyou.feiesdk.entity.DeviceInfo;
+import com.eeeyou.feiesdk.response.ApiBaseResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -96,5 +100,29 @@ public class FlyGoosePrintClient {
         }
         params.put(PHONE_NUM, phoneNum);
         return httpClient.postForm(ApiEnum.MODIFY_DEVICE_API, params, String.class);
+    }
+
+    /**
+     * 获取设备信息
+     *
+     * @param sn 设备编号
+     * @return 批量修改设备结果
+     */
+    public ApiBaseResponse<DeviceInfo> getDeviceInfo(String sn) throws JsonProcessingException {
+        HashMap<String, String> params = new HashMap<>();
+        if (StringUtils.isEmpty(sn)) {
+            throw new IllegalArgumentException("设备编号不能为空");
+        }
+        params.put(SN, sn);
+        String resultObj = httpClient.postForm(ApiEnum.PRINTER_INFO, params, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+
+        ApiBaseResponse<DeviceInfo> response = mapper.readValue(resultObj,
+                        mapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, DeviceInfo.class));
+
+        if (response == null || response.getData() == null){
+            throw new NullPointerException("设备信息为空");
+        }
+        return response;
     }
 }
