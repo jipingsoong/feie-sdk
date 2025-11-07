@@ -2,6 +2,7 @@ package com.eeeyou.feiesdk.client;
 
 import com.eeeyou.feiesdk.bulid.PrinterContentBuilder;
 import com.eeeyou.feiesdk.constant.ApiEnum;
+import com.eeeyou.feiesdk.constant.BaseConstant;
 import com.eeeyou.feiesdk.entity.Device;
 
 import java.util.HashMap;
@@ -53,5 +54,20 @@ public class FlyGoosePrintClient {
         }
         params.put(PRINTER_CONTENT, PrinterContentBuilder.build(deviceList));
         return httpClient.postForm(ApiEnum.BATCH_ADD_DEVICE_API, params, String.class);
+    }
+
+    /**
+     * 批量删除设备
+     *
+     * @param snList 设备编号集合
+     * @return 批量删除设备结果
+     */
+    public String batchDeleteDevice(List<String> snList) {
+        HashMap<String, String> params = new HashMap<>();
+        if (snList == null || snList.isEmpty()) {
+            throw new IllegalArgumentException("设备编号集合不能为空");
+        }
+        params.put(SN, String.join(BaseConstant.MINUS, snList));
+        return httpClient.postForm(ApiEnum.DELETE_DEVICE_API, params, String.class);
     }
 }

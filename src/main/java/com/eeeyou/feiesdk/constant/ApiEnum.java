@@ -25,6 +25,7 @@ public enum ApiEnum {
     printerSetScanSwitch("Open_printerSetScanSwitch", "https://api.feieyun.cn/Api/Open/",
             "设置设备扫码回调"),
     BATCH_ADD_DEVICE_API("Open_printerAddlist", "https://api.feieyun.cn/Api/Open/", "批量新增设备"),
+    DELETE_DEVICE_API("Open_printerDelList", "https://api.feieyun.cn/Api/Open/", "批量删除设备"),
     ;
 
 
