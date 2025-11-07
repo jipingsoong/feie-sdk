@@ -27,6 +27,7 @@ public enum ApiEnum {
     BATCH_ADD_DEVICE_API("Open_printerAddlist", "https://api.feieyun.cn/Api/Open/", "批量新增设备"),
     DELETE_DEVICE_API("Open_printerDelList", "https://api.feieyun.cn/Api/Open/", "批量删除设备"),
     MODIFY_DEVICE_API("Open_printerEdit", "https://api.feieyun.cn/Api/Open/", "修改设备信息"),
+    PRINT_ORDER_API("Open_printMsg", "https://api.feieyun.cn/Api/Open/", "打拼订单(标签)"),
     ;
 
 
