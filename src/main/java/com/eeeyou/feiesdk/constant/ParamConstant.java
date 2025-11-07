@@ -17,5 +17,7 @@ public class ParamConstant {
     public static final String SN = "sn";
     public static final String CONTENT = "content";
     public static final String TIMES = "times";
+    public static final String ORDER_ID = "orderid";
+    public static final String DATE = "date";
 
 }
