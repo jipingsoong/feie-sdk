@@ -23,7 +23,11 @@ public enum ApiEnum {
             "获取某台设备状态"),
     PRINTER_INFO("Open_printerInfo", "https://api.feieyun.cn/Api/Open/", "获取某台设备信息"),
     printerSetScanSwitch("Open_printerSetScanSwitch", "https://api.feieyun.cn/Api/Open/",
-            "设置设备扫码回调");
+            "设置设备扫码回调"),
+    BATCH_ADD_DEVICE_API("Open_printerAddlist", "https://api.feieyun.cn/Api/Open/", "批量新增设备"),
+    DELETE_DEVICE_API("Open_printerDelList", "https://api.feieyun.cn/Api/Open/", "批量删除设备"),
+    MODIFY_DEVICE_API("Open_printerEdit", "https://api.feieyun.cn/Api/Open/", "修改设备信息"),
+    ;
 
 
     private final String apiName;
