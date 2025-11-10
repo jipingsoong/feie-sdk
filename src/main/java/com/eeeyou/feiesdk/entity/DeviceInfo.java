@@ -39,4 +39,15 @@ public class DeviceInfo {
      * 1：已开启
      */
     private Integer scanSwitch;
+
+    /**
+     * auto_cut 切刀
+     * 0：已开启
+     * 1：未开启
+     */
+    private Integer auto_cut;
+    private String voice;
+    private String v5_scan_voice;
+    private String imsi;
+    private String net;
 }
