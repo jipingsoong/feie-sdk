@@ -79,7 +79,7 @@ public class FlyGooseAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ScanCallbackDispatcher scanCallbackDispatcher() {
-        return new ScanCallbackDispatcher();
+    public ScanCallbackDispatcher scanCallbackDispatcher(FlyGooseConfig flyGooseConfig) {
+        return new ScanCallbackDispatcher(flyGooseConfig);
     }
 }

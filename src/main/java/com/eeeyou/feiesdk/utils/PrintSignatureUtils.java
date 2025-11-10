@@ -2,8 +2,6 @@ package com.eeeyou.feiesdk.utils;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PublicKey;
@@ -26,7 +24,7 @@ public class PrintSignatureUtils {
     public static boolean verifySignature(@NonNull Map<String, String> params, @NonNull String publicKey) {
         try {
             String signValue = params.get("sign");
-            if (StringUtils.isBlank(signValue)) {
+            if (signValue == null || signValue.isEmpty()) {
                 log.error("签名参数sign不能为空");
                 return false;
             }
@@ -54,7 +52,7 @@ public class PrintSignatureUtils {
             String key = entry.getKey();
             String value = entry.getValue();
             // 剔除sign参数和空值参数
-            if (!"sign".equals(key) && StringUtils.isNotBlank(value)) {
+            if (!"sign".equals(key) && !(value == null || value.isEmpty())) {
                 sortedParams.put(key, value);
             }
         }

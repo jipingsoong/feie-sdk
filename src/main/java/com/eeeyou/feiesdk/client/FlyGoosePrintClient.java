@@ -227,7 +227,7 @@ public class FlyGoosePrintClient {
             throws JsonProcessingException {
         HashMap<String, String> params = new HashMap<>();
         params.put(SN, sn);
-        String resultObj = httpClient.postForm(ApiEnum.PRINT_API, params, String.class);
+        String resultObj = httpClient.postForm(ApiEnum.CLEAR_PRINT_QUEUE_API, params, String.class);
         return objectMapper.readValue(resultObj,
                 objectMapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, Boolean.class));
     }
@@ -278,7 +278,7 @@ public class FlyGoosePrintClient {
         HashMap<String, String> params = new HashMap<>();
         params.put(SN, sn);
         params.put(SWITCH, String.valueOf(switchStatus));
-        String resultObj = httpClient.postForm(ApiEnum.ORDER_COUNT_API, params, String.class);
+        String resultObj = httpClient.postForm(ApiEnum.PRINTER_SET_SCAN_SWITCH, params, String.class);
         return objectMapper.readValue(resultObj,
                 objectMapper.getTypeFactory().constructParametricType(ApiBaseResponse.class, Boolean.class));
     }

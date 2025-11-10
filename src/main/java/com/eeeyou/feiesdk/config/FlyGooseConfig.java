@@ -27,6 +27,11 @@ public class FlyGooseConfig {
      */
     private String publicKey;
 
+    /**
+     * 扫码回调私钥
+     */
+    private String scanPrivateKey;
+
     public String getUser() {
         return user;
     }
@@ -49,5 +54,13 @@ public class FlyGooseConfig {
 
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
+    }
+
+    public String getScanPrivateKey() {
+        return scanPrivateKey;
+    }
+
+    public void setScanPrivateKey(String scanPrivateKey) {
+        this.scanPrivateKey = scanPrivateKey;
     }
 }
