@@ -1,5 +1,6 @@
 package com.eeeyou.feiesdk.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -21,6 +22,11 @@ public class FlyGooseConfig {
      */
     private String uKey;
 
+    /**
+     * 飞鹅公钥
+     */
+    private String publicKey;
+
     public String getUser() {
         return user;
     }
@@ -35,5 +41,13 @@ public class FlyGooseConfig {
 
     public void setuKey(String uKey) {
         this.uKey = uKey;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 }

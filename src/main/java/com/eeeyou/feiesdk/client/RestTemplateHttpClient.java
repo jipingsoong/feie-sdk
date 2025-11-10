@@ -43,7 +43,6 @@ public class RestTemplateHttpClient {
      */
     public <T> T postForm(ApiEnum apiEnum, Map<String, String> params, Class<T> clazz) throws FlyGooseHttpException {
         String sTime = String.valueOf(System.currentTimeMillis() / 1000);
-
         params.put(USER, config.getUser());
         params.put(SIG, SignUtils.signature(sTime));
         params.put(S_TIME, sTime);
