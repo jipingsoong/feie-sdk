@@ -203,7 +203,6 @@ public class FlyGoosePrintClient {
         if (StringUtils.isEmpty(content)) {
             throw new IllegalArgumentException("打印内容不能为空");
         }
-
         Map<String, String> params = new HashMap<>();
         params.put(SN, sn);
         params.put("content", content);
@@ -211,7 +210,6 @@ public class FlyGoosePrintClient {
         if (times != null && times > 1) {
             params.put("times", String.valueOf(times));
         }
-
         String resultObj = httpClient.postForm(ApiEnum.PRINT_ORDER_API, params, String.class);
 
         // 解析 JSON 成统一返回体
