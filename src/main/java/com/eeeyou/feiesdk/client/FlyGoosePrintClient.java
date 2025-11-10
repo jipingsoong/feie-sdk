@@ -77,7 +77,7 @@ public class FlyGoosePrintClient {
         if (snList == null || snList.isEmpty()) {
             throw new IllegalArgumentException("设备编号集合不能为空");
         }
-        params.put(SN, String.join(BaseConstant.MINUS, snList));
+        params.put(SN_LIST, String.join(BaseConstant.MINUS, snList));
         return httpClient.postForm(ApiEnum.DELETE_DEVICE_API, params, String.class);
     }
 
@@ -111,6 +111,13 @@ public class FlyGoosePrintClient {
      *
      * @param sn 设备编号
      * @return 批量修改设备结果
+     *
+     * 返回打印机信息。共四个：
+     * 1、model机型，0：58小票机，1：80小票机，2：标签机，3：出餐宝，4：一体机
+     * 2、status状态，0：离线 1：在线，工作状态正常 2：在线，工作状态不正常
+     * 备注：工作状态不正常一般是无纸，离线的判断是打印机与服务器失去联系超过2分钟。
+     * 3、printlogo是否开启自动打印LOGO，N：未开启、Y：已开启
+     * 4、scanSwitch扫码设备回调状态，0：未开启、1：已开启
      */
     public ApiBaseResponse<DeviceInfo> getDeviceInfo(String sn) throws JsonProcessingException {
         Map<String, String> params = new HashMap<>();
@@ -196,7 +203,6 @@ public class FlyGoosePrintClient {
         if (StringUtils.isEmpty(content)) {
             throw new IllegalArgumentException("打印内容不能为空");
         }
-
         Map<String, String> params = new HashMap<>();
         params.put(SN, sn);
         params.put("content", content);
@@ -204,7 +210,6 @@ public class FlyGoosePrintClient {
         if (times != null && times > 1) {
             params.put("times", String.valueOf(times));
         }
-
         String resultObj = httpClient.postForm(ApiEnum.PRINT_ORDER_API, params, String.class);
 
         // 解析 JSON 成统一返回体
