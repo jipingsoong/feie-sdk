@@ -3,9 +3,7 @@ package com.eeeyou.feiesdk.config;
 import com.eeeyou.feiesdk.client.FlyGoosePrintClient;
 import com.eeeyou.feiesdk.client.RestTemplateHttpClient;
 import com.eeeyou.feiesdk.service.PrintCallbackDispatcher;
-import com.eeeyou.feiesdk.service.PrintCallbackHandler;
 import com.eeeyou.feiesdk.service.ScanCallbackDispatcher;
-import com.eeeyou.feiesdk.service.ScanCallbackHandler;
 import com.eeeyou.feiesdk.utils.ConfigUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -75,15 +73,13 @@ public class FlyGooseAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public PrintCallbackDispatcher printCallbackDispatcher(List<PrintCallbackHandler> handlers,
-                                                           FlyGooseConfig flyGooseConfig) {
-        return new PrintCallbackDispatcher(handlers, flyGooseConfig);
+    public PrintCallbackDispatcher printCallbackDispatcher(FlyGooseConfig flyGooseConfig) {
+        return new PrintCallbackDispatcher(flyGooseConfig);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ScanCallbackDispatcher scanCallbackDispatcher(List<ScanCallbackHandler> handlers,
-                                                         FlyGooseConfig flyGooseConfig) {
-        return new ScanCallbackDispatcher(handlers, flyGooseConfig);
+    public ScanCallbackDispatcher scanCallbackDispatcher() {
+        return new ScanCallbackDispatcher();
     }
 }

@@ -4,17 +4,15 @@ import com.eeeyou.feiesdk.config.FlyGooseConfig;
 import com.eeeyou.feiesdk.entity.PrintCallbackRequest;
 import com.eeeyou.feiesdk.entity.PrintCallbackResult;
 import com.eeeyou.feiesdk.utils.PrintSignatureUtils;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 public class PrintCallbackDispatcher {
-
-    private final List<PrintCallbackHandler> handlers;
 
     private final FlyGooseConfig config;
 
@@ -22,9 +20,11 @@ public class PrintCallbackDispatcher {
      * 处理回调请求
      *
      * @param request 打印回调请求实体
+     * @param printCallbackHandler 业务实现类实例
      * @return 打印回调业务返回
      */
-    public PrintCallbackResult handleCallback(PrintCallbackRequest request) {
+    public PrintCallbackResult handleCallback(@NonNull PrintCallbackRequest request,
+                                              @NonNull PrintCallbackHandler printCallbackHandler) {
 
         // 验证飞鹅公钥配置
         if (config == null || config.getPublicKey() == null) {
@@ -37,7 +37,8 @@ public class PrintCallbackDispatcher {
         }
 
         // 分发到业务处理器
-        return dispatchToHandlers(request);
+        return printCallbackHandler.handlePrintStatus(request.getOrderId(),
+                request.getStatus(), request.getStime());
     }
 
     /**
@@ -54,26 +55,5 @@ public class PrintCallbackDispatcher {
         params.put("stime", String.valueOf(request.getStime()));
         params.put("sign", request.getSign());
         return PrintSignatureUtils.verifySignature(params, publicKey);
-    }
-
-    /**
-     * 调用业务实现类
-     *
-     * @param request 打印回调请求实体
-     */
-    private PrintCallbackResult dispatchToHandlers(PrintCallbackRequest request) {
-        PrintCallbackResult finalResult = null;
-        for (PrintCallbackHandler handler : handlers) {
-            try {
-                PrintCallbackResult handlerResult = handler.handlePrintStatus(request.getOrderId(),
-                        request.getStatus(), request.getStime());
-                if (handlerResult != null) {
-                    finalResult = handlerResult;
-                }
-            } catch (Exception e) {
-                log.error("业务处理器执行异常: {}", e.getMessage(), e);
-            }
-        }
-        return (finalResult != null) ? finalResult : PrintCallbackResult.error("业务处理异常");
     }
 }
