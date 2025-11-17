@@ -1,6 +1,7 @@
 package com.eeeyou.feiesdk.config;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -11,12 +12,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author : SongJiping
  * @since : 2025/11/4 下午12:01
  */
+@Setter
+@Getter
 @ConfigurationProperties(prefix = "fg")
 public class FlyGooseConfig {
     /**
      * 飞鹅云用户名
      */
     private String user;
+
     /**
      * 飞鹅云密钥
      */
@@ -32,35 +36,4 @@ public class FlyGooseConfig {
      */
     private String scanPrivateKey;
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getuKey() {
-        return uKey;
-    }
-
-    public void setuKey(String uKey) {
-        this.uKey = uKey;
-    }
-
-    public String getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
-    }
-
-    public String getScanPrivateKey() {
-        return scanPrivateKey;
-    }
-
-    public void setScanPrivateKey(String scanPrivateKey) {
-        this.scanPrivateKey = scanPrivateKey;
-    }
 }

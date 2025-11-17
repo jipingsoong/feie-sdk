@@ -1,6 +1,7 @@
 package com.eeeyou.feiesdk.utils;
 
 import com.eeeyou.feiesdk.config.FlyGooseConfig;
+import lombok.Getter;
 
 /**
  * ConfigUtils
@@ -12,13 +13,10 @@ import com.eeeyou.feiesdk.config.FlyGooseConfig;
  */
 public class ConfigUtils {
 
+    @Getter
     private static FlyGooseConfig flyGooseConfig;
 
     public ConfigUtils(FlyGooseConfig flyGooseConfig) {
         ConfigUtils.flyGooseConfig = flyGooseConfig;
-    }
-
-    public static FlyGooseConfig getFlyGooseConfig() {
-        return flyGooseConfig;
     }
 }

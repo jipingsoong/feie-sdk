@@ -21,7 +21,7 @@ public class SignUtils {
      */
     public static String signature(String sTime) {
         FlyGooseConfig flyGooseConfig = ConfigUtils.getFlyGooseConfig();
-        return signature(flyGooseConfig.getUser(), flyGooseConfig.getuKey(), sTime);
+        return signature(flyGooseConfig.getUser(), flyGooseConfig.getUKey(), sTime);
     }
 
     /**
